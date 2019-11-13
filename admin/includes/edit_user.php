@@ -1,27 +1,26 @@
 <?php
 
-if(isset($_GET['p_id'])) {
-    $the_post_id = $_GET['p_id'];
+if(isset($_GET['edit_user'])) {
+    $the_user_id = $_GET['edit_user'];
 
-$query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
+$query = "SELECT * FROM users WHERE user_id = $the_user_id ";
 //$query = "CALL post_update_fetch('$the_post_id')";
-$select_all_posts = mysqli_query($connection,$query);
+$select_all_users_query = mysqli_query($connection,$query);
 
-confirmquery($select_all_posts);
+confirmquery($select_all_users_query);
 
-while($row = mysqli_fetch_assoc($select_all_posts)){
-    $post_id = $row['post_id'];
-    $post_title = $row['post_title'];
-    $post_author = $row['post_author'];
-    $post_category_id = $row['post_category_id'];
-    $post_status = $row['post_status'];
-    $post_image = $row['post_image'];
-    $post_content = $row['post_content'];
-    $post_tags = $row['post_tags'];
-    $post_comment_count = $row['post_comment_count'];
-    $post_date = $row['post_date'];
-
-
+while($row = mysqli_fetch_assoc($select_all_users_query)){
+  $user_id = $row['user_id'];
+  $username = $row['username'];
+  $user_password = $row['user_password'];
+  $user_email = $row['user_email'];
+  $user_firstname = $row['user_firstname'];
+  $user_lastname = $row['user_lastname'];
+  $user_image = $row['user_image'];
+  $date = $row['date'];
+  $user_role = $row['user_role'];
+  $user_randsalt = $row['user_randsalt'];
+  
     }} 
     
     
@@ -63,61 +62,57 @@ while($row = mysqli_fetch_assoc($select_all_posts)){
     ?>
 
 
-<form action="" method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data" >
 
     <div class="form-group">
-      <label for="title">Post Title</label>
-      <input value = "<?php echo $post_title ?>" type="text" name="post_title" id="" class="form-control" placeholder="" aria-describedby="helpId">
+      <label for="firstname">FirstName</label>
+      <input type="text" name="firstname" value="<?php echo $user_firstname; ?>" id="" class="form-control" placeholder="" aria-describedby="helpId">
     </div>
 
     <div class="form-group">
-      <label for="post_category">Post Category</label>
-        <select class="form-control" name="post_category" id="">
-
-         <?php
-            $query = "SELECT * FROM categories";
-            $select_all_categories = mysqli_query($connection,$query);
-    
-            while($row = mysqli_fetch_assoc($select_all_categories)){
-                $cat_id = $row['cat_id'];
-                $cat_title = $row['cat_title'];
-          
-                echo "<option value='$cat_id' selected>{$cat_title}</option>";
-            }
-        ?>
-          
-          
-        </select>
+      <label for="lastname">LastName</label>
+      <input type="text" name="lastname" value="<?php echo $user_lastname; ?>" id="" class="form-control" placeholder="" aria-describedby="helpId">
     </div>
 
     <div class="form-group">
-      <label for="author">Post Author</label>
-      <input value = "<?php echo $post_author ?>" type="text" name="post_author" id="" class="form-control" placeholder="" aria-describedby="helpId">
-    </div>
-
-    <div class="form-group">
-      <label for="post_status">Post Status</label>
-      <input value = "<?php echo $post_status ?>" type="text" name="post_status" id="" class="form-control" placeholder="" aria-describedby="helpId">
-    </div>
-
-    <div class="form-group">
-      <label for="post_image">Post Image</label><br>
-      <img width="150px" src="../images/<?php echo $post_image ; ?>" alt=''>
+      <label for="post_image">User Image</label><br>
+      <img width="120px" src="../images/<?php echo $user_image ; ?>" alt='user image'>
       <input value = "" type="file" name="image" id="" class="form-control" placeholder="" aria-describedby="helpId">
     </div>
 
     <div class="form-group">
-      <label for="post_tags">Post Tags</label>
-      <input value = "<?php echo $post_tags ?>" type="text" name="post_tags" id="" class="form-control" placeholder="" aria-describedby="helpId">
+      <label for="user_role">Role</label>
+        <select class="form-control" name="user_role" id="">
+        <option value="<?php echo $user_role; ?>" ><?php echo $user_role; ?></option>
+          
+         <?php
+            if ($user_role == Admin) {
+              echo "<option value='Subscriber'>Subscriber</option>";
+            } else {
+              echo "<option value='Admin'>Admin</option>";
+            }
+        ?>
+
+        </select>
     </div>
 
     <div class="form-group">
-      <label for="post_content">Post Content</label>
-      <textarea  name="post_content" id="" class="form-control" placeholder="" aria-describedby="helpId"> <?php echo $post_content ?> </textarea>
+      <label for="username">UserName</label>
+      <input type="text" name="username" value="<?php echo $username; ?>" id="" class="form-control" placeholder="" aria-describedby="helpId" >
     </div>
 
     <div class="form-group">
-      <input type="submit" name="update_post" id="" class="btn btn-primary" value="Update Post" aria-describedby="helpId">
+      <label for="email">Email</label>
+      <input type="text" name="user_email" value="<?php echo $user_email; ?>" id="" class="form-control" placeholder="" aria-describedby="helpId" >
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" name="user_password" value="<?php echo $user_password; ?>" id="" class="form-control" placeholder="" aria-describedby="helpId">
+    </div>
+
+    <div class="form-group">
+      <input type="submit" name="edit_user" id="" class="btn btn-primary" value="Update User" aria-describedby="helpId">
     </div>
 
 </form>

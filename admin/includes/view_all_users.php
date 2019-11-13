@@ -12,6 +12,8 @@
                                    <th>Date</th>
                                    <th>Role</th>
                                    <!-- <th>Randsalt</th> -->
+                                   <th>Admin</th>
+                                   <th>Subescriber</th>
                                    <th>Delete</th>
                                </tr>
                            </thead>
@@ -44,16 +46,17 @@
                                 echo "<td>{$user_firstname}</td>";
                                 echo "<td>{$user_lastname}</td>";
                                 echo "<td>{$user_email}</td>";
-                                echo "<td>{$user_image}</td>";
+                                echo "<td><img width=120 src='../images/{$user_image}' alt='image'></td>";
                                 echo "<td>{$date}</td>";
                                 echo "<td>{$user_role}</td>";
                                 // echo "<td>{$user_randsalt}</td>";
                                 // echo "<td><a href='../post.php?p_id=$post_id'>{$comment_post_title}</a></td>";
                                 // echo "<td>{$comment_date}</td>";
-                                // echo "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
-                                // echo "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
-                                 echo "<td><a href='users.php?delete={$user_id}'>delete</a></td>";
-                                 echo "</tr>";
+                                echo "<td><a href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
+                                echo "<td><a href='users.php?change_to_sub={$user_id}'>Subescriber</a></td>";
+                                echo "<td><a href='users.php?source=edit_user&edit_user={$user_id}'>edit</a></td>";
+                                echo "<td><a href='users.php?delete={$user_id}'>delete</a></td>";
+                                echo "</tr>";
                             }
                            ?>
                                
@@ -63,23 +66,23 @@
 
                        <?php 
                        
-                    //    if(isset($_GET['approve'])) {
-                    //         $the_comment_id = $_GET['approve'];
+                       if(isset($_GET['change_to_admin'])) {
+                            $change_to_admin_id = $_GET['change_to_admin'];
 
-                    //         $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$the_comment_id}" ;
-                    //         $approve_query = mysqli_query($connection, $query);
+                            $query = "UPDATE users SET user_role = 'Admin' WHERE user_id = {$change_to_admin_id}" ;
+                            $change_to_admin_query = mysqli_query($connection, $query);
 
-                    //         header("Location: comments.php");
-                    //     }
+                            header("Location: users.php");
+                        }
 
-                    //     if(isset($_GET['unapprove'])) {
-                    //         $the_comment_id = $_GET['unapprove'];
+                        if(isset($_GET['change_to_sub'])) {
+                            $change_to_sub_id = $_GET['change_to_sub'];
 
-                    //         $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$the_comment_id}" ;
-                    //         $unapprove_query = mysqli_query($connection, $query);
+                            $query = "UPDATE users SET user_role = 'Subescriber' WHERE user_id = {$change_to_sub_id}" ;
+                            $change_to_sub_query = mysqli_query($connection, $query);
 
-                    //         header("Location: comments.php");
-                    //     }
+                            header("Location: users.php");
+                        }
 
                         if(isset($_GET['delete'])) {
                             $the_user_id = $_GET['delete'];
